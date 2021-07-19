@@ -72,8 +72,8 @@ function css() {
         .pipe(group_media())
         .pipe(
             autoprefixer({
-                overrideBrowsersList: ["Last 5 versions"],
-                cascade: true,
+                overrideBrowserslist: ['last 2 versions'],
+                cascade: false
             })
         )
         .pipe(webpcss())
@@ -127,22 +127,19 @@ function images() {
 }
 
 function fonts() {
-    src(path.src.fonts)
-        .pipe(ttf2woff())
-        .pipe(dest(path.build.fonts));
-    return src(path.src.fonts)
-        .pipe(ttf2woff2())
-        .pipe(dest(path.build.fonts));
+    src(path.src.fonts).pipe(ttf2woff()).pipe(dest(path.build.fonts));
+    return src(path.src.fonts).pipe(ttf2woff2()).pipe(dest(path.build.fonts));
 }
 
-gulp.task('otf2ttf',function () {
-    return src([source_folder + '/fonts/*.otf'])
-        .pipe(fonter({
-            formats: ['ttf']
-        }))
-        .pipe(dest(source_folder + '/fonts/'))
-})
-
+gulp.task("otf2ttf", function () {
+    return src([source_folder + "/fonts/*.otf"])
+        .pipe(
+            fonter({
+                formats: ["ttf"],
+            })
+        )
+        .pipe(dest(source_folder + "/fonts/"));
+});
 function watchFiles() {
     gulp.watch([path.watch.html], html);
     gulp.watch([path.watch.css], css);
@@ -164,4 +161,3 @@ exports.html = html;
 exports.build = build;
 exports.watch = watch;
 exports.default = watch;
-
